@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 
+import { useLocalStorage } from "../hooks/useLocalStorage";
 import Button from '../theme/Button';
 
 const useStyles = makeStyles(theme => ({
@@ -23,15 +24,8 @@ const useStyles = makeStyles(theme => ({
 
 export default function SignupForm() {
     const classes = useStyles();
-    const [username, setUsername] = useState(JSON.parse(window.localStorage.getItem('username')));
-
-    useEffect(() => {
-        window.localStorage.setItem('username', JSON.stringify(username));
-    }, [username]);
-
-    const handleChanges = e => {
-        setUsername(e.target.value);
-    };
+    const [username, setUsername] = useLocalStorage('username');
+    const [email, setEmail] = useLocalStorage('email');
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -53,7 +47,16 @@ export default function SignupForm() {
                 label="Username"
                 className={classes.textField}
                 value={username}
-                onChange={handleChanges}
+                onChange={e => setUsername(e.target.value)}
+                margin="normal"
+                variant="outlined"
+            />
+            <TextField
+                id="outlined-name"
+                label="Email"
+                className={classes.textField}
+                value={email}
+                onChange={e => setEmail(e.target.value)}
                 margin="normal"
                 variant="outlined"
             />
