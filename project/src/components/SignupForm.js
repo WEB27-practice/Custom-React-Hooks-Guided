@@ -23,11 +23,11 @@ const useStyles = makeStyles(theme => ({
 
 export default function SignupForm() {
     const classes = useStyles();
-    const [username, setUsername] = useState('');
+    const [username, setUsername] = useState(JSON.parse(window.localStorage.getItem('username')));
 
     useEffect(() => {
-
-    })
+        window.localStorage.setItem('username', JSON.stringify(username));
+    }, [username]);
 
     const handleChanges = e => {
         setUsername(e.target.value);
