@@ -2,7 +2,9 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 
-import { useLocalStorage } from "../hooks/useLocalStorage";
+// import { useLocalStorage } from "../hooks/useLocalStorage";
+import { useForm } from "../hooks/useForm";
+
 import Button from '../theme/Button';
 
 const useStyles = makeStyles(theme => ({
@@ -22,20 +24,22 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
+const initialValue = {
+    username: '',
+    email: ''
+}
+
 export default function SignupForm() {
     const classes = useStyles();
-    const [username, setUsername] = useLocalStorage('username');
-    const [email, setEmail] = useLocalStorage('email');
+    const [{ username, email }, clearForm, handleChanges] = useForm(
+            'sign up form', 
+            initialValue
+        );
 
     const handleSubmit = e => {
         e.preventDefault();
         alert(username);
-    };
-
-    const clearForm = e => {
-        e.preventDefault();
-        setUsername('');
-    };
+    }
 
     return (
         <div p={2} className="form">
@@ -47,18 +51,20 @@ export default function SignupForm() {
                 label="Username"
                 className={classes.textField}
                 value={username}
-                onChange={e => setUsername(e.target.value)}
+                onChange={handleChanges}
                 margin="normal"
                 variant="outlined"
+                name="username"
             />
             <TextField
                 id="outlined-name"
                 label="Email"
                 className={classes.textField}
                 value={email}
-                onChange={e => setEmail(e.target.value)}
+                onChange={handleChanges}
                 margin="normal"
                 variant="outlined"
+                name="email"
             />
             <div className="flexer">
                 <Button color="red" onClick={clearForm}>

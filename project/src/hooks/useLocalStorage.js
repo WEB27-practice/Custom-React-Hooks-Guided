@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const useLocalStorage = (key, initialState) => {
+export const useLocalStorage = (key, initialState = '') => {
     // set up state property
     // capture the values of the input
     // if local data does not have that, else use initial data
